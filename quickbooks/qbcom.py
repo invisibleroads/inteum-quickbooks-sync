@@ -34,10 +34,11 @@ class QuickBooks(object):
 
     def __del__(self):
         'Disconnect'
-        if hasattr(self, 'requestProcessor'):
-            if hasattr(self, 'session'):
-                self.requestProcessor.EndSession(self.session)
+        try:
+            self.requestProcessor.EndSession(self.session)
             self.requestProcessor.CloseConnection()
+        except:
+            pass
 
     def call(self, requestType, requestDictionary=None, qbxmlVersion='8.0', onError='stopOnError', saveXML=False):
         'Send request and parse response'
